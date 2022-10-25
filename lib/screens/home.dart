@@ -21,29 +21,29 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepPurple[300],
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('REST API call'),
+        title: const Text('REST-API call'),
       ),
-      body: ListView.builder(
+      body: GridView.builder(
         itemCount: users.length,
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemBuilder: (context, index) {
           final user = users[index];
           final color = user.gender == 'male' ? Colors.green : Colors.purple;
-
-          return ListTile(
-            leading: ClipOval(
-                child: Image.network(
-              user.picture.thumbnail,
-              fit: BoxFit.fill,
-            )),
-            title: Text(
-              user.fullName,
+          return Container(
+            margin: const EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                  image: NetworkImage(
+                    user.picture.large,
+                  ),
+                  fit: BoxFit.contain),
             ),
-            subtitle: Text(
-              user.location.coordinates.longitude,
-            ),
-            tileColor: color,
           );
         },
       ),
