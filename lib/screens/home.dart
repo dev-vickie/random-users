@@ -32,6 +32,11 @@ class _HomeScreenState extends State<HomeScreen> {
           final color = user.gender == 'male' ? Colors.green : Colors.purple;
 
           return ListTile(
+            leading: ClipOval(
+                child: Image.network(
+              user.picture.thumbnail,
+              fit: BoxFit.fill,
+            )),
             title: Text(
               user.fullName,
             ),
