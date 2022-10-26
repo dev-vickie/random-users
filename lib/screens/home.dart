@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Text(
                                 user.name.first,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 24,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -113,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Text(
                                 user.location.country,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   color: Colors.white,
                                 ),
@@ -125,25 +125,23 @@ class _HomeScreenState extends State<HomeScreen> {
                           alignment: Alignment.topLeft,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.location_on_rounded,
-                                    size: 25,
-                                    color: Colors.pink,
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.location_on_rounded,
+                                  size: 25,
+                                  color: Colors.pink,
+                                ),
+                                const SizedBox(width: 3),
+                                Text(
+                                  user.location.city,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    backgroundColor: Colors.pink,
                                   ),
-                                  SizedBox(width: 3),
-                                  Text(
-                                    user.location.city,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      backgroundColor: Colors.pink,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
