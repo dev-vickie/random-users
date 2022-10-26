@@ -21,31 +21,148 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple[300],
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.grey[200],
+        title: const Text(
+          'DateMe',
+          style: TextStyle(
+            color: Colors.pink,
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
         centerTitle: true,
-        title: const Text('REST-API call'),
-      ),
-      body: GridView.builder(
-        itemCount: users.length,
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-        itemBuilder: (context, index) {
-          final user = users[index];
-          final color = user.gender == 'male' ? Colors.green : Colors.purple;
-          return Container(
-            margin: const EdgeInsets.all(5),
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                  image: NetworkImage(
-                    user.picture.large,
-                  ),
-                  fit: BoxFit.contain),
+        leading: const Padding(
+          padding: EdgeInsets.all(3),
+          child: ClipOval(
+            child: Icon(
+              Icons.person,
+              color: Colors.pink,
+              size: 50,
             ),
-          );
-        },
+          ),
+        ),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 5),
+            child: Icon(
+              Icons.notifications,
+              color: Colors.pink,
+              size: 40,
+            ),
+          )
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+              flex: 5,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: users.length,
+                itemBuilder: (context, index) {
+                  final user = users[index];
+
+                  final width = MediaQuery.of(context).size.width;
+
+                  return Container(
+                    width: width * 0.99,
+                    margin: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.pinkAccent, width: 1),
+                      image: DecorationImage(
+                        image: NetworkImage(user.picture.large),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              gradient: LinearGradient(
+                                begin: Alignment.center,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black.withOpacity(0.33),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 20,
+                          left: 20,
+                          right: 30,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                user.name.first,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                user.location.country,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.location_on_rounded,
+                                    size: 25,
+                                    color: Colors.pink,
+                                  ),
+                                  SizedBox(width: 3),
+                                  Text(
+                                    user.location.city,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      backgroundColor: Colors.pink,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              )),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                Icon(Icons.cancel, color: Colors.pink, size: 50),
+                Icon(Icons.favorite, color: Colors.pink, size: 100),
+                Icon(Icons.flash_auto, color: Colors.pink, size: 40),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
