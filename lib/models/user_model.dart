@@ -1,6 +1,6 @@
 import 'package:rest_api_call/models/user_dob.dart';
 import 'package:rest_api_call/models/user_location.dart';
-import 'package:rest_api_call/models/user_name_model.dart';
+import 'package:rest_api_call/models/user_name.dart';
 import 'package:rest_api_call/models/user_picture.dart';
 
 class User {
@@ -45,7 +45,5 @@ class User {
       picture: picture,
     );
   }
-  String get fullName {
-    return '${name.title} ${name.first} ${name.last}';
-  }
+  String get fullName => '${name.title} ${name.first} ${name.last}';
 }

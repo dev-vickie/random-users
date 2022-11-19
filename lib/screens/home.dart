@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:rest_api_call/models/user_model.dart';
 import 'package:rest_api_call/services/user_api.dart';
 
+String name = '';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -18,6 +20,13 @@ class _HomeScreenState extends State<HomeScreen> {
     fetchUsers();
   }
 
+  Future<void> fetchUsers() async {
+    final response = await UserApi.fetchUsers();
+    setState(() {
+      users = response;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.grey[200],
-        title: const Text(
-          'DateMe',
-          style: TextStyle(
+        title: Text(
+          name,
+          style: const TextStyle(
             color: Colors.pink,
             fontSize: 30,
             fontWeight: FontWeight.bold,
@@ -66,11 +75,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (context, index) {
                   final user = users[index];
 
+                  name = user.name.first;
+
                   final width = MediaQuery.of(context).size.width;
 
                   return Container(
-                    width: width * 0.99,
-                    margin: const EdgeInsets.all(20),
+                    width: width * 0.95,
+                    margin: const EdgeInsets.all(40),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: Colors.pinkAccent, width: 1),
@@ -90,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 end: Alignment.bottomCenter,
                                 colors: [
                                   Colors.transparent,
-                                  Colors.black.withOpacity(0.33),
+                                  Colors.black.withOpacity(0.35),
                                 ],
                               ),
                             ),
@@ -104,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                user.name.first,
+                                user.fullName,
                                 style: const TextStyle(
                                   fontSize: 24,
                                   color: Colors.white,
@@ -163,12 +174,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-
-  Future<void> fetchUsers() async {
-    final response = await UserApi.fetchUsers();
-    setState(() {
-      users = response;
-    });
   }
 }
